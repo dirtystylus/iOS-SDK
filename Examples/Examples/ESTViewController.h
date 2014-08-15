@@ -12,4 +12,9 @@
 
 @property (strong, nonatomic)  NSArray *beaconDemoList;
 
+/*
+ * Selected beacon is returned on given completion handler.
+ */
+- (void)switchToProximity;
+
 @end

@@ -20,7 +20,7 @@
 // Type and class definitions
 
 
-typedef NS_ENUM(char, ESTBeaconPower)
+typedef enum : char
 {
     ESTBeaconPowerLevel1 = -30,
     ESTBeaconPowerLevel2 = -20,
@@ -30,36 +30,36 @@ typedef NS_ENUM(char, ESTBeaconPower)
     ESTBeaconPowerLevel6 = -4,
     ESTBeaconPowerLevel7 = 0,
     ESTBeaconPowerLevel8 = 4
-};
+} ESTBeaconPower;
 
-typedef NS_ENUM(int, ESTBeaconBatteryType)
+typedef enum : int
 {
     ESTBeaconBatteryTypeUnknown = 0,
     ESTBeaconBatteryTypeCR2450,
     ESTBeaconBatteryTypeCR2477
-};
+} ESTBeaconBatteryType;
 
 
-typedef NS_ENUM(int, ESTBeaconFirmwareState)
+typedef enum : int
 {
     ESTBeaconFirmwareStateBoot,
     ESTBeaconFirmwareStateApp
-};
+} ESTBeaconFirmwareState;
 
-typedef NS_ENUM(int, ESTEvent)
+typedef enum : int
 {
     ESTEventEnterRegion,
     ESTEventExitRegion
-};
+} ESTEvent;
 
-typedef NS_ENUM(int, ESTProximity)
+typedef enum : int
 {
     ESTProximityImmediate,
-    ESTProximityNear,
-    ESTProximityFar
-};
+	ESTProximityNear,
+	ESTProximityFar
+} ESTProximity;
 
-typedef NS_ENUM(int, ESTBeaconColor)
+typedef enum : int
 {
     ESTBeaconColorUnknown = 0,
     ESTBeaconColorMint = 1,
@@ -67,21 +67,21 @@ typedef NS_ENUM(int, ESTBeaconColor)
     ESTBeaconColorBlueberry,
     ESTBeaconColorWhite,
     ESTBeaconColorTransparent
-};
+} ESTBeaconColor;
 
-typedef NS_ENUM(int, ESTBeaconFirmwareUpdate)
+typedef enum : int
 {
     ESTBeaconFirmwareUpdateNone,
     ESTBeaconFirmwareUpdateAvailable,
     ESTBeaconFirmwareUpdateNotAvailable
-};
+} ESTBeaconFirmwareUpdate;
 
-typedef NS_ENUM(int, ESTBeaconConnectionStatus)
+typedef enum : int
 {
     ESTBeaconConnectionStatusConnecting,
-    ESTBeaconConnectionStatusConnected,
-    ESTBeaconConnectionStatusDisconnected
-};
+	ESTBeaconConnectionStatusConnected,
+	ESTBeaconConnectionStatusDisconnected
+} ESTBeaconConnectionStatus;
 
 typedef void(^ESTCompletionBlock)(NSError* error);
 typedef void(^ESTObjectCompletionBlock)(id result, NSError* error);

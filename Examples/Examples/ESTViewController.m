@@ -66,6 +66,20 @@
     [self.navigationController pushViewController:cloudVC animated:YES];
 }
 
+-(void)switchToProximity {
+    //UIViewController *demoViewController;
+    /*demoViewController = [[ESTBeaconTableVC alloc] initWithScanType:ESTScanTypeBeacon
+                                                         completion:^(ESTBeacon *beacon) {
+                                                             
+         ESTProximityDemoVC *proximityDemoVC = [[ESTProximityDemoVC alloc] initWithBeacon:beacon];
+         [self.navigationController pushViewController:proximityDemoVC animated:YES];
+     }];*/
+    NSLog(@"switchToProximity called");
+    ESTProximityDemoVC *proximityDemoVC = [ESTProximityDemoVC new];
+    //UIViewController *viewController = [[UIViewController alloc] init];
+    [self.navigationController pushViewController:proximityDemoVC animated:YES];
+}
+
 
 #pragma mark - Table view data source
 

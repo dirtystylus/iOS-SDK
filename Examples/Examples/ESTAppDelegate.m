@@ -16,9 +16,9 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    ESTViewController* demoList = [[ESTViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    self.demoList = [[ESTViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
-    self.mainNavigation = [[UINavigationController alloc] initWithRootViewController:demoList];
+    self.mainNavigation = [[UINavigationController alloc] initWithRootViewController:self.demoList];
     self.window.rootViewController = self.mainNavigation;
     
     [self.window makeKeyAndVisible];
@@ -30,7 +30,35 @@
     
     return YES;
 }
-							
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    UIApplicationState state = [application applicationState];
+    
+    if (state == UIApplicationStateBackground || state == UIApplicationStateInactive) {
+        NSLog(@"didReceiveLocalNotification payload: %@", [notification.userInfo objectForKey:@"payload"]);
+        NSString *notificationType = [notification.userInfo objectForKey:@"payload"];
+        if ([notificationType isEqualToString:@"entry"]) {
+            [self.demoList switchToProximity];
+        } else {
+            UIAlertView *helloWorldAlert = [[UIAlertView alloc]
+                                            initWithTitle:@"Welcome Back" message:@"You just exited, goodbye!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            // Display the Hello World Message
+            [helloWorldAlert show];
+        }
+        
+    }
+    else if (state == UIApplicationStateActive) {
+        UIAlertView *helloWorldAlert = [[UIAlertView alloc]
+                                        initWithTitle:@"Welcome Back" message:@"Wake up from Foreground!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        // Display the Hello World Message
+        [helloWorldAlert show];
+        self.window.rootViewController = self.mainNavigation;
+    }
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

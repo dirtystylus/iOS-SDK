@@ -19,6 +19,7 @@
 @property (nonatomic, strong) IBOutlet UIView            *mainView;
 @property (nonatomic, strong) IBOutlet UISwitch          *enterRegionSwitch;
 @property (nonatomic, strong) IBOutlet UISwitch          *exitRegionSwitch;
+@property (nonatomic, strong) UIImageView       *imageView;
 
 @end
 
@@ -66,16 +67,22 @@
 - (void)beaconManager:(ESTBeaconManager *)manager didEnterRegion:(ESTBeaconRegion *)region
 {
     UILocalNotification *notification = [UILocalNotification new];
-    notification.alertBody = @"Enter region notification";
-    
+    notification.alertBody = @"You have entered Bluecadet! Please open the Bluecadet app to see more about what’s around you.";
+    AudioServicesPlaySystemSound(1007);
+    NSString *notificationType = @"entry";
+    NSDictionary *data = [NSDictionary dictionaryWithObject:notificationType forKey:@"payload"];
+    [notification setUserInfo:data];
     [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
 - (void)beaconManager:(ESTBeaconManager *)manager didExitRegion:(ESTBeaconRegion *)region
 {
     UILocalNotification *notification = [UILocalNotification new];
-    notification.alertBody = @"Exit region notification";
-    
+    notification.alertBody = @"You’re now leaving Bluecadet! You might be interested in other Fishtown locations.";
+    AudioServicesPlaySystemSound(1003);
+    NSString *notificationType = @"exit";
+    NSDictionary *data = [NSDictionary dictionaryWithObject:notificationType forKey:@"payload"];
+    [notification setUserInfo:data];
     [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
@@ -90,5 +97,27 @@
     
     [self.beaconManager startMonitoringForRegion:self.beaconRegion];
 }
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    NSLog(@"initWithCoder Notification received");
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didlocalNotificationReceived:) name:nil object:nil];
+    }
+    return self;
+}
+
+- (void)didlocalNotificationReceived:(NSNotification *)notification
+{
+    NSLog(@"Local notification %@", [notification.userInfo objectForKey:@"payload"]);
+    if (notification) {
+        UIAlertView *helloWorldAlert = [[UIAlertView alloc]
+                                        initWithTitle:@"Welcome Back" message:@"Launched from Notification!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        // Display the Hello World Message
+        [helloWorldAlert show];
+    }
+}
+
 
 @end
